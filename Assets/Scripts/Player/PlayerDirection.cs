@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerDirection : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
+    public CapsuleCollider collider;
 
     public Sprite spriteLookingForward;
     public Sprite spriteLookingUpward;
@@ -32,11 +33,18 @@ public class PlayerDirection : MonoBehaviour
         {
             lookingUp = false;
             spriteRenderer.sprite = spriteLookingForward;
+
+            collider.center = new Vector3(0, -0.1f, 0);
+            collider.height = 1.8f;
+            
         }
         else if (!lookingUp && holdingUp)
         {
             lookingUp = true;
             spriteRenderer.sprite = spriteLookingUpward;
+
+            collider.center = new Vector3(0, 0.2f, 0);
+            collider.height = 2.4f;
         }
     }
 
