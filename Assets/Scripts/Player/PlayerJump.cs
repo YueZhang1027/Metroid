@@ -8,18 +8,22 @@ public class PlayerJump : MonoBehaviour
     Collider col;
 
     public float jumpPower = 15;
+    Animator StandAnimator;
 
     void Awake()
     {
         rigid = this.GetComponentInParent<Rigidbody>();
         col = this.GetComponent<Collider>();
+        StandAnimator = this.GetComponent<Animator>();
     }
 
     void Update()
     {
         Vector3 newVelocity = rigid.velocity;
+        bool isGrounded = IsGrounded();
+        StandAnimator?.SetBool("IsStanding", isGrounded);
 
-        if (Input.GetKeyDown(KeyCode.Z) && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.Z) && isGrounded)
             newVelocity.y = jumpPower;
 
         rigid.velocity = newVelocity;

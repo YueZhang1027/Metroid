@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerWeapon : MonoBehaviour
 {
     PlayerDirection playerDirection;
+    Animator StandAnimator;
 
     public GameObject bulletPrefab;
 
@@ -16,6 +17,7 @@ public class PlayerWeapon : MonoBehaviour
     void Awake()
     {
         playerDirection = this.GetComponentInParent<PlayerDirection>();
+        StandAnimator = this.GetComponent<Animator>();
     }
 
     void Update()
@@ -23,6 +25,7 @@ public class PlayerWeapon : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             GameObject bulletInstance = GameObject.Instantiate(bulletPrefab);
+            bulletInstance.name = "Bullet";
 
             if (playerDirection.IsLookingUp())
             {
@@ -42,5 +45,13 @@ public class PlayerWeapon : MonoBehaviour
                 }
             }
         }
+
+        if (ExistBullet()) StandAnimator?.SetBool("Firing", true);
+        else StandAnimator?.SetBool("Firing", false);
+    }
+
+    bool ExistBullet()
+    {
+        return GameObject.FindGameObjectsWithTag("Bullet").Length > 0;
     }
 }

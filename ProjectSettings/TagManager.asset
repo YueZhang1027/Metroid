@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - MorphBall
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -139,11 +139,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 122738767604157760}
-  collider: {fileID: 122738767604157761}
+  capsuleCollider: {fileID: 122738767604157761}
   spriteLookingForward: {fileID: -5243087586260246376, guid: ce94f51f558bd47eca28c0601d6aa21e,
     type: 3}
   spriteLookingUpward: {fileID: 5779219738947237465, guid: ce94f51f558bd47eca28c0601d6aa21e,
     type: 3}
+  StandAnimator: {fileID: 584226969539033560}
 --- !u!114 &3762162460145754151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4cacdb12657e4843988b1f3849a2034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StandAnimator: {fileID: 584226969539033560}
   standing: {fileID: 122738767604157767}
   morphed: {fileID: 5001591110577274608}
 --- !u!114 &3282760505704263065
@@ -185,6 +187,7 @@ GameObject:
   - component: {fileID: 1955622820}
   - component: {fileID: 1955622819}
   - component: {fileID: 2473754301980638782}
+  - component: {fileID: 584226969539033560}
   m_Layer: 8
   m_Name: Standing
   m_TagString: Untagged
@@ -247,7 +250,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5243087586260246376, guid: ce94f51f558bd47eca28c0601d6aa21e,
+  m_Sprite: {fileID: 1910045491716223301, guid: ce94f51f558bd47eca28c0601d6aa21e,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -315,6 +318,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac86257bb3bc7a24187d7b8d0fc7576a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &584226969539033560
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122738767604157767}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 59f51f8f5787a1b4494a0e819acc0623, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5001591110577274608
 GameObject:
   m_ObjectHideFlags: 0
