@@ -157,7 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4cacdb12657e4843988b1f3849a2034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StandAnimator: {fileID: 584226969539033560}
   standing: {fileID: 122738767604157767}
   morphed: {fileID: 5001591110577274608}
 --- !u!114 &3282760505704263065
@@ -250,7 +249,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1910045491716223301, guid: ce94f51f558bd47eca28c0601d6aa21e,
+  m_Sprite: {fileID: -5243087586260246376, guid: ce94f51f558bd47eca28c0601d6aa21e,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -305,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d96d9342b4c545e47b1697c394270932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 12
+  jumpPower: 10
 --- !u!114 &2473754301980638782
 MonoBehaviour:
   m_ObjectHideFlags: 0

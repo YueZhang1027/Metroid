@@ -13,6 +13,8 @@ public class PlayerDirection : MonoBehaviour
     bool facingRight = true;
     bool lookingUp = false;
 
+    bool isStable = true;
+
     public Animator StandAnimator;
 
     void Update()
@@ -28,8 +30,13 @@ public class PlayerDirection : MonoBehaviour
             facingRight = true;
             //this.transform.localScale = new Vector3(1, 1, 1);
         }
+
+        if (horizontalAxis <= 0.01 && horizontalAxis >= -0.01) isStable = true;
+        else isStable = false;
+
         StandAnimator?.SetBool("FaceRight", facingRight);
         StandAnimator?.SetFloat("HorizontalInput", horizontalAxis);
+        StandAnimator?.SetBool("IsStable", isStable);
 
         bool holdingUp = Input.GetKey(KeyCode.UpArrow);
         if (lookingUp && !holdingUp)

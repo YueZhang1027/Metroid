@@ -24,7 +24,10 @@ public class PlayerJump : MonoBehaviour
         StandAnimator?.SetBool("IsStanding", isGrounded);
 
         if (Input.GetKeyDown(KeyCode.Z) && isGrounded)
+        {
             newVelocity.y = jumpPower;
+            StandAnimator?.SetTrigger("Jump");
+        }
 
         rigid.velocity = newVelocity;
     }
