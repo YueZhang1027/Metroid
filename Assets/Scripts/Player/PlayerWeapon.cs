@@ -11,6 +11,8 @@ public class PlayerWeapon : MonoBehaviour
 
     public Transform firingPositionForward;
     public Transform firingPositionUpward;
+    public Transform firingPositionBackward;
+    public Transform firingPositionUpwardLeft;
 
     public float firingSpeed = 10f;
 
@@ -27,15 +29,20 @@ public class PlayerWeapon : MonoBehaviour
             GameObject bulletInstance = GameObject.Instantiate(bulletPrefab);
             bulletInstance.name = "Bullet";
 
-            if (playerDirection.IsLookingUp())
+            bool lookUp = playerDirection.IsLookingUp();
+            bool faceRight = playerDirection.IsFacingRight();
+
+            if (lookUp)
             {
                 bulletInstance.transform.position = firingPositionUpward.position;
+                if (!faceRight) bulletInstance.transform.position = firingPositionUpwardLeft.position;
                 bulletInstance.GetComponent<Rigidbody>().velocity = Vector3.up * firingSpeed;
             }
             else
             {
                 bulletInstance.transform.position = firingPositionForward.position;
-                if (playerDirection.IsFacingRight())
+                if (!faceRight) bulletInstance.transform.position = firingPositionBackward.position;
+                if (faceRight)
                 {
                     bulletInstance.GetComponent<Rigidbody>().velocity = Vector3.right * firingSpeed;
                 }

@@ -44,8 +44,8 @@ public class PlayerDirection : MonoBehaviour
             lookingUp = false;
             //spriteRenderer.sprite = spriteLookingForward;
 
-            capsuleCollider.center = new Vector3(0, -0.1f, 0);
-            capsuleCollider.height = 1.8f;
+            capsuleCollider.center = Vector3.zero;
+            capsuleCollider.height = 2f;
             
         }
         else if (!lookingUp && holdingUp)

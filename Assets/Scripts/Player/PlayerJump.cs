@@ -10,6 +10,8 @@ public class PlayerJump : MonoBehaviour
     public float jumpPower = 15;
     Animator StandAnimator;
 
+    public AudioClip JumpClip;
+
     void Awake()
     {
         rigid = this.GetComponentInParent<Rigidbody>();
@@ -27,6 +29,7 @@ public class PlayerJump : MonoBehaviour
         {
             newVelocity.y = jumpPower;
             StandAnimator?.SetTrigger("Jump");
+            AudioSource.PlayClipAtPoint(JumpClip, this.transform.position);
         }
 
         rigid.velocity = newVelocity;
