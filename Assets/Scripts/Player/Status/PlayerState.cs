@@ -52,7 +52,13 @@ public class PlayerState : MonoBehaviour
         {
             standing.SetActive(true);
             morphed.SetActive(false);
+
             isStanding = true;
+
+            var dir = standing.GetComponentInParent<PlayerDirection>();
+            dir?.StandAnimator?.SetBool("FaceRight", dir.IsFacingRight());
+
+            Debug.Log(dir.IsFacingRight());
         }
 
         if (health <= 0)

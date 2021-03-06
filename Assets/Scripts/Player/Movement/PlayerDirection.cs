@@ -10,7 +10,7 @@ public class PlayerDirection : MonoBehaviour
     public Sprite spriteLookingForward;
     public Sprite spriteLookingUpward;
 
-    bool facingRight = true;
+    public bool facingRight = true;
     bool lookingUp = false;
 
     bool isStable = true;
