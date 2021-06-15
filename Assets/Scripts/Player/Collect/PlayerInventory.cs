@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public bool hasMorphBall = false;
+    private bool hasMorphBall = false;
+    public bool HasMorphBall
+    {
+        get { return hasMorphBall; }
+        set { hasMorphBall = value; }
+    }
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.tag == "MorphBall")
         {
             Destroy(other.gameObject);
-            hasMorphBall = true;
+            HasMorphBall = true;
         }
     }
 
-    public bool HasMorphBall()
-    {
-        return hasMorphBall;
-    }
 }

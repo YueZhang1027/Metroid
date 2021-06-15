@@ -18,14 +18,19 @@ public class PlayerState : MonoBehaviour
 
     public enum PlayerStatus
     {
-        Normal,
         Borning,
-        Hurt,
-        Transferring,
+        Normal,
+        Uncontrollable,
         Death
     }
 
-    PlayerStatus status = PlayerStatus.Borning;
+    static PlayerStatus status = PlayerStatus.Borning;
+
+    public static bool isMoveable()
+    {
+        return status == PlayerStatus.Normal;
+    }
+
 
     void Awake()
     {
@@ -35,13 +40,14 @@ public class PlayerState : MonoBehaviour
 
     IEnumerator BornToNormal()
     {
-        yield return new WaitForSeconds(10f); // borning animation time
+        //yield return new WaitForSeconds(5f); // borning animation time
         SetAndSendAnimatorStatus(PlayerStatus.Normal);
+        yield break;
     }
 
     void Update()
     {
-        if (isStanding && Input.GetKeyDown(KeyCode.DownArrow) && playerInventory.HasMorphBall())
+        if (isStanding && Input.GetKeyDown(KeyCode.DownArrow) && playerInventory.HasMorphBall)
         {
             standing.SetActive(false);
             morphed.SetActive(true);

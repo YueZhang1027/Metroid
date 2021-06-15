@@ -15,6 +15,7 @@ public class PlayerRun : MonoBehaviour
 
     void Update()
     {
+        if (!PlayerState.isMoveable()) return;
         Vector3 newVelocity = rigid.velocity;
 
         newVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;

@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerDirection : MonoBehaviour
 {
+    /*private static Controls controls;
+    public static Controls Controls
+    {
+        get
+        {
+            if (controls != null) return controls;
+            return controls = new Controls();
+        }
+    }*/
+
     public SpriteRenderer spriteRenderer;
     public CapsuleCollider capsuleCollider;
 
@@ -19,6 +29,8 @@ public class PlayerDirection : MonoBehaviour
 
     void Update()
     {
+        if (!PlayerState.isMoveable()) return;
+
         float horizontalAxis = Input.GetAxis("Horizontal");
         if (facingRight && horizontalAxis < 0)
         {

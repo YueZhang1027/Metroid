@@ -21,6 +21,8 @@ public class PlayerJump : MonoBehaviour
 
     void Update()
     {
+        if (!PlayerState.isMoveable()) return;
+
         Vector3 newVelocity = rigid.velocity;
         bool isGrounded = IsGrounded();
         StandAnimator?.SetBool("IsStanding", isGrounded);
