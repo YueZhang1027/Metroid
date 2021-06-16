@@ -10,7 +10,7 @@ public class Zoomer : Enemy
 
     void Start()
     {
-        
+        SetAnimatorOn(direction);
     }
 
     void Update()
@@ -24,20 +24,20 @@ public class Zoomer : Enemy
 
         if (isTurnLocked) return;
 
-        Debug.Log(IsDirectionAvailable(direction));
+        MovingDirection nextDirection = FindNextDirection(direction);
 
-        if (IsDirectionAvailable(direction))
+        if (IsDirectionAvailable(direction, false))
         {
-            if (IsDirectionAvailable(FindNextDirection(direction)))
+            if (IsDirectionAvailable(nextDirection))
             {
-                StartCoroutine(PerformTurn(FindNextDirection(direction)));
+                StartCoroutine(PerformTurn(nextDirection));
             }
         }
-        else 
+        else
         {
-            StartCoroutine(PerformTurn(FindCounterDirection(FindNextDirection(direction))));
-            // Find an available one
+            StartCoroutine(PerformTurn(FindCounterDirection(nextDirection)));
         }
+        
     }
 
     void PerformMovement()
@@ -69,7 +69,7 @@ public class Zoomer : Enemy
         transform.position = pos;
     }
 
-    WaitForFixedUpdate wait = new WaitForFixedUpdate();
+    readonly WaitForFixedUpdate wait = new WaitForFixedUpdate();
 
     IEnumerator PerformTurn(MovingDirection targetDirection)
     {
@@ -77,21 +77,7 @@ public class Zoomer : Enemy
         
         direction = targetDirection;
 
-        switch (direction)
-        {
-            case MovingDirection.Down:
-                animator.SetTrigger("Down");
-                break;
-            case MovingDirection.Left:
-                animator.SetTrigger("Left");
-                break;
-            case MovingDirection.Up:
-                animator.SetTrigger("Up");
-                break;
-            case MovingDirection.Right:
-                animator.SetTrigger("Right");
-                break;
-        }
+        SetAnimatorOn(direction);
 
         yield return wait;
         yield return wait;
@@ -100,7 +86,6 @@ public class Zoomer : Enemy
 
         while (IsDirectionAvailable(nextDirection))
         {
-            Debug.Log(nextDirection);
             yield return null;
         }
 
@@ -139,7 +124,7 @@ public class Zoomer : Enemy
             curDirection == MovingDirection.Right;
     }
 
-    bool IsDirectionAvailable(MovingDirection curDirection)
+    Vector3 GetDirectionInVector(MovingDirection curDirection)
     {
         Vector3 targetDir = Vector3.zero;
         switch (curDirection)
@@ -157,13 +142,44 @@ public class Zoomer : Enemy
                 targetDir = Vector3.right;
                 break;
         }
+        return targetDir;
+    }
+
+    void SetAnimatorOn(MovingDirection curDirection)
+    {
+        switch (curDirection)
+        {
+            case MovingDirection.Down:
+                animator.SetTrigger("Down");
+                break;
+            case MovingDirection.Left:
+                animator.SetTrigger("Left");
+                break;
+            case MovingDirection.Up:
+                animator.SetTrigger("Up");
+                break;
+            case MovingDirection.Right:
+                animator.SetTrigger("Right");
+                break;
+        }
+    }
+
+    bool IsDirectionAvailable(MovingDirection curDirection, bool isStrict = true)
+    {
+        Vector3 targetDir = GetDirectionInVector(curDirection);
 
         Ray ray = new Ray(col.bounds.center, targetDir);
         float radius = IsHorizontalDirection(curDirection)? col.bounds.extents.x - .05f : col.bounds.extents.y - .05f;
         float fullDistance = IsHorizontalDirection(curDirection) ? col.bounds.extents.x + .05f : col.bounds.extents.y +.05f;
-        Debug.DrawRay(col.bounds.center, targetDir, Color.green);
+        //Debug.DrawRay(col.bounds.center, targetDir, Color.green);
 
-        if (Physics.SphereCast(ray, radius, fullDistance, 1 << 10)) return false;
-        else return true;
+        if (isStrict)
+        {
+            if (Physics.SphereCast(ray, radius, fullDistance, 1 << 10)) return false;
+            return true;
+        }
+
+        if (Physics.Raycast(ray, fullDistance, 1 << 10)) return false;
+        return true;
     }
 }
