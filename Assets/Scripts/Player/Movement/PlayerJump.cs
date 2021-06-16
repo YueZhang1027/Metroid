@@ -19,7 +19,7 @@ public class PlayerJump : MonoBehaviour
         StandAnimator = this.GetComponent<Animator>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!PlayerState.isMoveable()) return;
 

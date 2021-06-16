@@ -13,7 +13,7 @@ public class PlayerRun : MonoBehaviour
         rigid = this.GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!PlayerState.isMoveable()) return;
         Vector3 newVelocity = rigid.velocity;

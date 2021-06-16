@@ -15,11 +15,28 @@ public class Zoomer : Enemy
 
     void Update()
     {
+        
+    }
+
+    private void FixedUpdate()
+    {
         PerformMovement();
 
-        if (!isTurnLocked && IsDirectionAvailable(FindNextDirection(direction)))
+        if (isTurnLocked) return;
+
+        Debug.Log(IsDirectionAvailable(direction));
+
+        if (IsDirectionAvailable(direction))
         {
-           StartCoroutine(PerformTurn());
+            if (IsDirectionAvailable(FindNextDirection(direction)))
+            {
+                StartCoroutine(PerformTurn(FindNextDirection(direction)));
+            }
+        }
+        else 
+        {
+            StartCoroutine(PerformTurn(FindCounterDirection(FindNextDirection(direction))));
+            // Find an available one
         }
     }
 
@@ -52,11 +69,13 @@ public class Zoomer : Enemy
         transform.position = pos;
     }
 
-    IEnumerator PerformTurn()
+    WaitForFixedUpdate wait = new WaitForFixedUpdate();
+
+    IEnumerator PerformTurn(MovingDirection targetDirection)
     {
         isTurnLocked = true;
         
-        direction = FindNextDirection(direction);
+        direction = targetDirection;
 
         switch (direction)
         {
@@ -74,9 +93,14 @@ public class Zoomer : Enemy
                 break;
         }
 
+        yield return wait;
+        yield return wait;
+
         MovingDirection nextDirection = FindNextDirection(direction);
+
         while (IsDirectionAvailable(nextDirection))
         {
+            Debug.Log(nextDirection);
             yield return null;
         }
 
@@ -86,6 +110,27 @@ public class Zoomer : Enemy
     MovingDirection FindNextDirection(MovingDirection curDirection)
     {
         return curDirection == MovingDirection.Right ? MovingDirection.Down : direction + 1;
+    }
+
+    MovingDirection FindCounterDirection(MovingDirection curDirection)
+    {
+        MovingDirection targetDirection = MovingDirection.Down;
+        switch (curDirection) 
+        {
+            case MovingDirection.Down:
+                targetDirection = MovingDirection.Up;
+                break;
+            case MovingDirection.Up:
+                targetDirection = MovingDirection.Down;
+                break;
+            case MovingDirection.Left:
+                targetDirection = MovingDirection.Right;
+                break;
+            case MovingDirection.Right:
+                targetDirection = MovingDirection.Left;
+                break;
+        }
+        return targetDirection;
     }
 
     bool IsHorizontalDirection(MovingDirection curDirection)
@@ -114,11 +159,11 @@ public class Zoomer : Enemy
         }
 
         Ray ray = new Ray(col.bounds.center, targetDir);
-        Debug.Log(curDirection);
-        float radius = IsHorizontalDirection(curDirection)? col.bounds.extents.y - .05f : col.bounds.extents.x - .05f;
-        float fullDistance = IsHorizontalDirection(curDirection) ? col.bounds.extents.x + .05f : col.bounds.extents.y + .05f;
+        float radius = IsHorizontalDirection(curDirection)? col.bounds.extents.x - .05f : col.bounds.extents.y - .05f;
+        float fullDistance = IsHorizontalDirection(curDirection) ? col.bounds.extents.x + .05f : col.bounds.extents.y +.05f;
+        Debug.DrawRay(col.bounds.center, targetDir, Color.green);
 
-        if (Physics.SphereCast(ray, radius, fullDistance)) return false;
+        if (Physics.SphereCast(ray, radius, fullDistance, 1 << 10)) return false;
         else return true;
     }
 }
