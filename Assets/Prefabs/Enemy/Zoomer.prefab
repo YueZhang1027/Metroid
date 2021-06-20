@@ -111,10 +111,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9909b0041bffd9428313b46d7d2d3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 3
+  hp: 1
   col: {fileID: 6558257505717663420}
   animator: {fileID: 5812335735667471588}
   direction: 0
+  deathAnimation: {fileID: 0}
+  speed: 1.5
 --- !u!95 &5812335735667471588
 Animator:
   serializedVersion: 3
