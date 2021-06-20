@@ -17,13 +17,10 @@ public class PlayerDirection : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public CapsuleCollider capsuleCollider;
 
-    public Sprite spriteLookingForward;
-    public Sprite spriteLookingUpward;
 
     public bool facingRight = true;
     bool lookingUp = false;
 
-    bool isStable = true;
 
     public Animator StandAnimator;
 
@@ -32,23 +29,11 @@ public class PlayerDirection : MonoBehaviour
         if (!PlayerState.isMoveable()) return;
 
         float horizontalAxis = Input.GetAxis("Horizontal");
-        if (facingRight && horizontalAxis < 0)
+        if ((facingRight && horizontalAxis < 0) || (!facingRight && horizontalAxis > 0))
         {
-            facingRight = false;
-            //this.transform.localScale = new Vector3(-1, 1, 1);
+            facingRight = !facingRight;
+            this.transform.localScale = facingRight ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
         }
-        else if (!facingRight && horizontalAxis > 0)
-        {
-            facingRight = true;
-            //this.transform.localScale = new Vector3(1, 1, 1);
-        }
-
-        if (horizontalAxis <= 0.01 && horizontalAxis >= -0.01) isStable = true;
-        else isStable = false;
-
-        StandAnimator?.SetBool("FaceRight", facingRight);
-        StandAnimator?.SetFloat("HorizontalInput", horizontalAxis);
-        StandAnimator?.SetBool("IsStable", isStable);
 
         bool holdingUp = Input.GetKey(KeyCode.UpArrow);
         if (lookingUp && !holdingUp)
@@ -63,13 +48,16 @@ public class PlayerDirection : MonoBehaviour
         else if (!lookingUp && holdingUp)
         {
             lookingUp = true;
-            spriteRenderer.sprite = spriteLookingUpward;
+            //spriteRenderer.sprite = spriteLookingUpward;
 
             capsuleCollider.center = new Vector3(0, 0.2f, 0);
             capsuleCollider.height = 2.4f;
         }
 
-        StandAnimator?.SetBool("HoldingUp", lookingUp);
+
+        if (lookingUp) StandAnimator.SetLayerWeight(1, 1.0f);
+        else StandAnimator.SetLayerWeight(1, 0.0f);
+        //StandAnimator?.SetBool("HoldingUp", lookingUp);
     }
 
     public bool IsFacingRight()

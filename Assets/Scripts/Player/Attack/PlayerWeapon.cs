@@ -35,13 +35,11 @@ public class PlayerWeapon : MonoBehaviour
             if (lookUp)
             {
                 bulletInstance.transform.position = firingPositionUpward.position;
-                if (!faceRight) bulletInstance.transform.position = firingPositionUpwardLeft.position;
                 bulletInstance.GetComponent<Rigidbody>().velocity = Vector3.up * firingSpeed;
             }
             else
             {
                 bulletInstance.transform.position = firingPositionForward.position;
-                if (!faceRight) bulletInstance.transform.position = firingPositionBackward.position;
                 if (faceRight)
                 {
                     bulletInstance.GetComponent<Rigidbody>().velocity = Vector3.right * firingSpeed;
@@ -53,8 +51,8 @@ public class PlayerWeapon : MonoBehaviour
             }
         }
 
-        if (ExistBullet()) StandAnimator?.SetBool("Firing", true);
-        else StandAnimator?.SetBool("Firing", false);
+        if (ExistBullet()) StandAnimator?.SetBool("IsFiring", true);
+        else StandAnimator?.SetBool("IsFiring", false);
     }
 
     bool ExistBullet()

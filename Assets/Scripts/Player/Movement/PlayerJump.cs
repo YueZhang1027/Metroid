@@ -19,31 +19,54 @@ public class PlayerJump : MonoBehaviour
         StandAnimator = this.GetComponent<Animator>();
     }
 
-    void FixedUpdate()
+    bool Jump = false;
+    bool isGrounded = true;
+
+    private void FixedUpdate()
     {
         if (!PlayerState.isMoveable()) return;
 
         Vector3 newVelocity = rigid.velocity;
-        bool isGrounded = IsGrounded();
-        StandAnimator?.SetBool("IsStanding", isGrounded);
+        isGrounded = IsGrounded();
 
-        if (Input.GetKeyDown(KeyCode.Z) && isGrounded)
+        if (Jump)
         {
-            newVelocity.y = jumpPower;
-            StandAnimator?.SetTrigger("Jump");
+            Debug.Log("PerformJump");
+
+            StandAnimator?.SetBool("IsJumping", true);
             AudioSource.PlayClipAtPoint(JumpClip, this.transform.position);
+            newVelocity.y = jumpPower;
+            isGrounded = false;
+            Jump = false;
+        }
+
+        StandAnimator.SetBool("IsGrounded", isGrounded);
+
+        if (isGrounded)
+        {
+            StandAnimator?.SetBool("IsJumping", false);
         }
 
         rigid.velocity = newVelocity;
     }
 
+    void Update()
+    {
+        if (!PlayerState.isMoveable()) return;
+
+        isGrounded = IsGrounded();
+        if (Input.GetKeyDown(KeyCode.Z) && isGrounded)
+        {
+            Jump = true;
+        }
+    }
+
     bool IsGrounded()
     {
-        Ray ray = new Ray(col.bounds.center, Vector3.down);
-        float radius = col.bounds.extents.x - .05f;
-        float fullDistance = col.bounds.extents.y + .05f;
-
-        if (Physics.SphereCast(ray, radius, fullDistance)) return true;
-        else return false;
+        bool isGrounded = Physics.Raycast(col.bounds.center, 
+                               Vector3.down, 
+                               col.bounds.extents.y + .05f, 
+                               1 << 10);
+        return isGrounded || (Mathf.Abs(rigid.velocity.x) < 0.01f && Mathf.Abs(rigid.velocity.y) < 0.01f);
     }
 }
