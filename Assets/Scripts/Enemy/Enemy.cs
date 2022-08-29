@@ -18,40 +18,4 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] protected MovingDirection direction = MovingDirection.Down;
 
-    List<string> WeaponTagList = new List<string>()
-    {
-        "Bullet"
-    };
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        Debug.Log(collision.gameObject);
-        var tag = collision.gameObject.tag;
-        if (tag == "Player")
-        {
-            // Hit player
-            return;
-        }
-
-        if (WeaponTagList.Contains(tag))
-        {
-            Weapon weapon = collision.gameObject.GetComponent<Weapon>();
-            if (weapon)
-            {
-                hp -= weapon.GetDamage();
-                CheckDeath();
-            }
-            return;
-        }
-    }
-
-
-    void CheckDeath()
-    {
-        if (hp > 0) return;
-
-        //animator.Play
-        Destroy(this.gameObject);
-    }
-
 }
