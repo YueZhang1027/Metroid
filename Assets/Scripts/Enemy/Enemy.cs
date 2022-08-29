@@ -13,7 +13,6 @@ public enum MovingDirection
 public class Enemy : MonoBehaviour
 {
     [SerializeField] protected float hp = 0f;
-    [SerializeField] protected float damage = 0f;
     [SerializeField] protected Collider col = null;
     [SerializeField] protected Animator animator = null;
 
@@ -31,11 +30,6 @@ public class Enemy : MonoBehaviour
         if (tag == "Player")
         {
             // Hit player
-            PlayerState playerState = collision.gameObject.GetComponent<PlayerState>();
-            if (playerState)
-            {
-                playerState.HealthChange(-damage);
-            }
             return;
         }
 

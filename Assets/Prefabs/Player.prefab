@@ -149,7 +149,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0673077, y: 1}
+    m_SensorSize: {x: 1.0661376, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -376,6 +376,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 122738767604157760}
   capsuleCollider: {fileID: 122738767604157761}
+  spriteLookingForward: {fileID: -5243087586260246376, guid: ce94f51f558bd47eca28c0601d6aa21e,
+    type: 3}
+  spriteLookingUpward: {fileID: 5779219738947237465, guid: ce94f51f558bd47eca28c0601d6aa21e,
+    type: 3}
   facingRight: 1
   StandAnimator: {fileID: 584226969539033560}
 --- !u!114 &3762162460145754151
