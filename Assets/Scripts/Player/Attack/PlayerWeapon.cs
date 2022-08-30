@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    PlayerDirection playerDirection;
-    Animator StandAnimator;
-
     public GameObject bulletPrefab;
 
     public Transform firingPositionForward;
@@ -16,12 +13,6 @@ public class PlayerWeapon : MonoBehaviour
 
     public float firingSpeed = 10f;
 
-    void Awake()
-    {
-        playerDirection = this.GetComponentInParent<PlayerDirection>();
-        StandAnimator = this.GetComponent<Animator>();
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.X))
@@ -29,8 +20,8 @@ public class PlayerWeapon : MonoBehaviour
             GameObject bulletInstance = GameObject.Instantiate(bulletPrefab);
             bulletInstance.name = "Bullet";
 
-            bool lookUp = playerDirection.IsLookingUp();
-            bool faceRight = playerDirection.IsFacingRight();
+            bool lookUp = PlayerState.Instance.IsLookingUp();
+            bool faceRight = PlayerState.Instance.IsFacingRight();
 
             if (lookUp)
             {
@@ -53,8 +44,7 @@ public class PlayerWeapon : MonoBehaviour
             }
         }
 
-        if (ExistBullet()) StandAnimator?.SetBool("Firing", true);
-        else StandAnimator?.SetBool("Firing", false);
+        PlayerAnimatorManager.Instance.CurActiveAnimator.SetBool("Firing", ExistBullet());
     }
 
     bool ExistBullet()
