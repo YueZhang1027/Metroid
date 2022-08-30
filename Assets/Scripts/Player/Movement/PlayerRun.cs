@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// for both morph ball and original status
+
 public class PlayerRun : MonoBehaviour
 {
-    Rigidbody rigid;
+    Rigidbody rb;
 
     public float moveSpeed = 5;
 
     void Awake()
     {
-        rigid = this.GetComponent<Rigidbody>();
+        rb = this.GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
-        if (!PlayerState.isMoveable()) return;
-        Vector3 newVelocity = rigid.velocity;
+        if (!PlayerState.Instance.isMoveable()) return;
+        Vector3 newVelocity = rb.velocity;
 
         newVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;
 
-        rigid.velocity = newVelocity;
+        PlayerAnimatorManager.Instance.CurActiveAnimator.SetFloat("HorizontalInput", newVelocity.x);
+
+        rb.velocity = newVelocity;
     }
 }

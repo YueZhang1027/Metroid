@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MorphBall
   - Bullet
+  - PlayerShape
   layers:
   - Default
   - TransparentFX

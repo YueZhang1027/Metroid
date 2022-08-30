@@ -149,7 +149,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0661376, y: 1}
+    m_SensorSize: {x: 1.0667678, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -309,6 +309,7 @@ GameObject:
   - component: {fileID: 6330278680419701847}
   - component: {fileID: 3762162460145754151}
   - component: {fileID: 3282760505704263065}
+  - component: {fileID: 6279257078008577704}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -374,14 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6358c0806207f5b4781a234e1f77cb08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 122738767604157760}
   capsuleCollider: {fileID: 122738767604157761}
-  spriteLookingForward: {fileID: -5243087586260246376, guid: ce94f51f558bd47eca28c0601d6aa21e,
-    type: 3}
-  spriteLookingUpward: {fileID: 5779219738947237465, guid: ce94f51f558bd47eca28c0601d6aa21e,
-    type: 3}
-  facingRight: 1
-  StandAnimator: {fileID: 584226969539033560}
 --- !u!114 &3762162460145754151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,9 +388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4cacdb12657e4843988b1f3849a2034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  standing: {fileID: 122738767604157767}
-  morphed: {fileID: 5001591110577274608}
   healthUI: {fileID: 0}
+  playerShapes: []
 --- !u!114 &3282760505704263065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +400,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91230612213fc5844bd2ebd1b1710ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6279257078008577704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122738766584764031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621187590c7fd8a4d81ca206b72bcf42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &122738767604157767

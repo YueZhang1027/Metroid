@@ -1,32 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum PlayerStatus
+{
+    Borning,
+    Normal,
+    Uncontrollable,
+    Death
+}
+
+public enum PlayerShape
+{
+    Original = 0,
+    MorphBall = 1
+}
+
 public class PlayerState : MonoBehaviour
 {
-    PlayerInventory playerInventory;
-
-    public GameObject standing;
-    public GameObject morphed;
-
-    bool isStanding = true;
+    public static PlayerState Instance { get; private set; }
 
     // Player health status
     int health = 30;
     public Text healthUI;
 
-    public enum PlayerStatus
-    {
-        Borning,
-        Normal,
-        Uncontrollable,
-        Death
-    }
+    public GameObject[] playerShapes;
+    PlayerShape shape = PlayerShape.Original;
+    PlayerStatus status = PlayerStatus.Normal;
 
-    static PlayerStatus status = PlayerStatus.Borning;
+    Collider col;
 
-    public static bool isMoveable()
+    public bool isMoveable()
     {
         return status == PlayerStatus.Normal;
     }
@@ -34,43 +40,54 @@ public class PlayerState : MonoBehaviour
 
     void Awake()
     {
-        playerInventory = this.GetComponent<PlayerInventory>();
-        StartCoroutine("BornToNormal");
+        Instance = this;
+        StartCoroutine("Born");
     }
 
-    IEnumerator BornToNormal()
+    private void Start()
+    {
+        SetUpShapeChange();
+    }
+
+    IEnumerator Born()
     {
         //yield return new WaitForSeconds(5f); // borning animation time
-        SetAndSendAnimatorStatus(PlayerStatus.Normal);
+        //SetAndSendAnimatorStatus(PlayerStatus.Normal);
         yield break;
     }
 
     void Update()
     {
-        if (isStanding && Input.GetKeyDown(KeyCode.DownArrow) && playerInventory.HasMorphBall)
+        if (shape != PlayerShape.MorphBall && Input.GetKeyDown(KeyCode.DownArrow) && PlayerInventory.Instance.HasMorphBall)
         {
-            standing.SetActive(false);
-            morphed.SetActive(true);
-            isStanding = false;
+            playerShapes[(int)shape].SetActive(false);
+            playerShapes[(int)PlayerShape.MorphBall].SetActive(true);
+            shape = PlayerShape.MorphBall;
+
+            SetUpShapeChange();
         }
-
-        if (!isStanding && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.UpArrow)))
+        else if (shape != PlayerShape.Original && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.UpArrow)))
         {
-            standing.SetActive(true);
-            morphed.SetActive(false);
+            playerShapes[(int)shape].SetActive(false);
 
-            isStanding = true;
+            playerShapes[(int)PlayerShape.Original].SetActive(true);
+            shape = PlayerShape.Original;
 
-            var dir = standing.GetComponentInParent<PlayerDirection>();
-            dir?.StandAnimator?.SetBool("FaceRight", dir.IsFacingRight());
-
-            Debug.Log(dir.IsFacingRight());
+            SetUpShapeChange();
         }
 
         if (health <= 0)
         {
-            SetAndSendAnimatorStatus(PlayerStatus.Death);
+            //SetAndSendAnimatorStatus(PlayerStatus.Death);
         }
+    }
+
+    void SetUpShapeChange()
+    {
+        PlayerAnimatorManager.Instance.CurActiveAnimator = playerShapes[(int)shape].GetComponent<Animator>();
+        col = playerShapes[(int)shape].GetComponent<Collider>();
+
+        Debug.Log(col);
     }
 
     public void HealthChange(int change)
@@ -81,9 +98,13 @@ public class PlayerState : MonoBehaviour
     }
 
 
-    void SetAndSendAnimatorStatus(PlayerStatus newStatus)
+    public bool IsGrounded()
     {
-        status = newStatus;
+        Ray ray = new Ray(col.bounds.center, Vector3.down);
+        float radius = col.bounds.extents.x - .05f;
+        float fullDistance = col.bounds.extents.y + .05f;
 
+        if (Physics.SphereCast(ray, radius, fullDistance)) return true;
+        else return false;
     }
 }

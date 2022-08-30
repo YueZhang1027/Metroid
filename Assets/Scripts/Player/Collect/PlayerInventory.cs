@@ -2,8 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// collectible item struct
+
 public class PlayerInventory : MonoBehaviour
 {
+    public static PlayerInventory Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private bool hasMorphBall = false;
     public bool HasMorphBall
     {
