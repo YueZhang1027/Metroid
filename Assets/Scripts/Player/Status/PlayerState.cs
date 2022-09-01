@@ -32,12 +32,6 @@ public class PlayerState : MonoBehaviour
 
     Collider col;
 
-    public bool isMoveable()
-    {
-        return status == PlayerStatus.Normal;
-    }
-
-
     void Awake()
     {
         Instance = this;
@@ -60,20 +54,11 @@ public class PlayerState : MonoBehaviour
     {
         if (shape != PlayerShape.MorphBall && Input.GetKeyDown(KeyCode.DownArrow) && PlayerInventory.Instance.HasMorphBall)
         {
-            playerShapes[(int)shape].SetActive(false);
-            playerShapes[(int)PlayerShape.MorphBall].SetActive(true);
-            shape = PlayerShape.MorphBall;
-
-            SetUpShapeChange();
+            SetUpShapeChange(PlayerShape.MorphBall);
         }
         else if (shape != PlayerShape.Original && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.UpArrow)))
         {
-            playerShapes[(int)shape].SetActive(false);
-
-            playerShapes[(int)PlayerShape.Original].SetActive(true);
-            shape = PlayerShape.Original;
-
-            SetUpShapeChange();
+            SetUpShapeChange(PlayerShape.Original);
         }
 
         if (health <= 0)
@@ -117,8 +102,13 @@ public class PlayerState : MonoBehaviour
         PlayerAnimatorManager.Instance.CurActiveAnimator.SetBool("HoldingUp", lookingUp);
     }
 
-    void SetUpShapeChange()
+    void SetUpShapeChange(PlayerShape newShape = PlayerShape.Original)
     {
+        playerShapes[(int)shape].SetActive(false);
+        shape = newShape;
+        playerShapes[(int)shape].SetActive(true);
+        
+
         PlayerAnimatorManager.Instance.CurActiveAnimator = playerShapes[(int)shape].GetComponent<Animator>();
         col = playerShapes[(int)shape].GetComponent<Collider>();
     }
@@ -132,8 +122,26 @@ public class PlayerState : MonoBehaviour
 
 
     #region physic parameter query
+    public bool isMoveable()
+    {
+        return status == PlayerStatus.Normal;
+    }
+
+    public bool canJump()
+    {
+        return isMoveable() && shape == PlayerShape.Original && IsGrounded();
+    }
+
     bool lookingUp = false;
     bool facingRight = true;
+
+    public bool MeetWall(float x)
+    {
+        Ray ray = new Ray(col.bounds.center, x > 0 ? Vector3.right : Vector3.left);
+        float fullDistance = col.bounds.extents.x + .05f;
+
+        return Physics.Raycast(ray, fullDistance);
+    }
 
     public bool IsGrounded()
     {
@@ -141,8 +149,8 @@ public class PlayerState : MonoBehaviour
         float radius = col.bounds.extents.x - .05f;
         float fullDistance = col.bounds.extents.y + .05f;
 
-        if (Physics.SphereCast(ray, radius, fullDistance)) return true;
-        else return false;
+        return Physics.Raycast(ray, fullDistance);
+        //Physics.SphereCast(ray, radius, fullDistance);
     }
 
     public bool IsFacingRight()

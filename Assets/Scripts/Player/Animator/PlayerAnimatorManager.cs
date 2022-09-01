@@ -18,6 +18,8 @@ public class PlayerAnimatorManager : MonoBehaviour
         set { curActiveAnimator = value; }
     }
 
+    public bool isRunJump = false;
+
     private void FixedUpdate()
     {
         SetAnimatorLayer();
@@ -29,8 +31,14 @@ public class PlayerAnimatorManager : MonoBehaviour
             CurActiveAnimator.SetLayerWeight(i, 0);
 
 
-        if (!PlayerState.Instance.IsGrounded()) CurActiveAnimator.SetLayerWeight(2, 1);
-        else if (Mathf.Abs(Input.GetAxis("Horizontal")) <= 0.01) CurActiveAnimator.SetLayerWeight(0, 1);
-        else CurActiveAnimator.SetLayerWeight(1, 1);
+        if (!PlayerState.Instance.IsGrounded())
+        {
+            CurActiveAnimator.SetLayerWeight(isRunJump ? 3 : 2, 1);
+        }
+        else
+        {
+            //isRunJump = false;
+            CurActiveAnimator.SetLayerWeight(Mathf.Abs(Input.GetAxis("Horizontal")) <= 0.01 ? 0 : 1, 1);
+        }
     }
 }
