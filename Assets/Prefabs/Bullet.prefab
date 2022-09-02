@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 7266848300592361132}
   - component: {fileID: 7266848300592361131}
   - component: {fileID: 7266848300592361130}
-  - component: {fileID: 1583816945662902774}
-  - component: {fileID: 473467299108721785}
   - component: {fileID: 7447420719466034287}
+  - component: {fileID: 7807808557436496361}
   m_Layer: 9
   m_Name: Bullet
   m_TagString: Bullet
@@ -51,6 +50,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -116,31 +116,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!114 &1583816945662902774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7266848300592361128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c486e0e17009bb84ca368a193c49030f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyTime: 0.35
---- !u!114 &473467299108721785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7266848300592361128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: defcb42cf0e36da419e283e3386728fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &7447420719466034287
 AudioSource:
   m_ObjectHideFlags: 0
@@ -237,3 +212,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7807808557436496361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266848300592361128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffc48115687eea49abe4b375f947744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  destroyTime: 0.35

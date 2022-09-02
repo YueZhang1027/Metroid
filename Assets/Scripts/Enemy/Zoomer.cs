@@ -20,6 +20,7 @@ public class Zoomer : Enemy
 
     private void FixedUpdate()
     {
+        if (terminateMovement) return;
         PerformMovement();
 
         if (isTurnLocked) return;
@@ -37,7 +38,6 @@ public class Zoomer : Enemy
         {
             StartCoroutine(PerformTurn(FindCounterDirection(nextDirection)));
         }
-        
     }
 
     void PerformMovement()

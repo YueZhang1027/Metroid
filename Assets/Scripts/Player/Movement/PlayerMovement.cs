@@ -7,12 +7,12 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
     float moveSpeed = 6f;
 
-    float jumpAmount = 13.5f;
+    float jumpAmount = 17f;
     public AudioClip JumpClip;
 
     float gravity = 5.0f;
-    float gravityScale = 1f;
-    float fallingGravityScale = 1.35f;
+    float gravityScale = 1.0f;
+    float fallingGravityScale = 1.2f;
 
     // Start is called before the first frame update
     void Awake()

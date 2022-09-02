@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 3973218771797922869}
   - component: {fileID: 3973218771797922867}
   - component: {fileID: 3973218771797922866}
+  - component: {fileID: 2134584879587158262}
   m_Layer: 0
   m_Name: Morph Ball
-  m_TagString: MorphBall
+  m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +48,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -95,3 +97,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2134584879587158262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3973218771797922868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca72eedcd9045cd4d8e5b340e75bf4d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0

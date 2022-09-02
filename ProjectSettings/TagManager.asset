@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - MorphBall
   - Bullet
-  - PlayerShape
+  - Enemy
+  - Collectible
   layers:
   - Default
   - TransparentFX
@@ -17,7 +17,7 @@ TagManager:
   - 
   - 
   - Player
-  - Bullet
+  - Weapon
   - Environment
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 3815074621
     locked: 0

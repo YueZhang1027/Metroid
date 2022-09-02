@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5812335735667471588}
   m_Layer: 0
   m_Name: Zoomer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,10 +111,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9909b0041bffd9428313b46d7d2d3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 3
+  hp: 15
   col: {fileID: 6558257505717663420}
   animator: {fileID: 5812335735667471588}
   direction: 0
+  speed: 1
 --- !u!95 &5812335735667471588
 Animator:
   serializedVersion: 3

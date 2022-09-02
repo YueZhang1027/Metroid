@@ -149,7 +149,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0671642, y: 1}
+    m_SensorSize: {x: 1.0671463, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 1118514651}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -389,6 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621187590c7fd8a4d81ca206b72bcf42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRunJump: 0
 --- !u!114 &1118514651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,11 +415,10 @@ GameObject:
   - component: {fileID: 122738767604157760}
   - component: {fileID: 122738767604157761}
   - component: {fileID: 1955622820}
-  - component: {fileID: 2473754301980638782}
   - component: {fileID: 584226969539033560}
   m_Layer: 8
   m_Name: Standing
-  m_TagString: PlayerShape
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -526,18 +526,6 @@ MonoBehaviour:
   firingPositionBackward: {fileID: 1000867701}
   firingPositionUpwardLeft: {fileID: 1661770407}
   firingSpeed: 10
---- !u!114 &2473754301980638782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 122738767604157767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac86257bb3bc7a24187d7b8d0fc7576a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &584226969539033560
 Animator:
   serializedVersion: 3
@@ -568,11 +556,10 @@ GameObject:
   - component: {fileID: 7805043307931465189}
   - component: {fileID: 5410318253564707323}
   - component: {fileID: 4144674457821405119}
-  - component: {fileID: 4091640489728396097}
   - component: {fileID: 1432362123}
   m_Layer: 8
   m_Name: Morphed
-  m_TagString: PlayerShape
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -656,18 +643,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.45
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4091640489728396097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5001591110577274608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac86257bb3bc7a24187d7b8d0fc7576a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1432362123
 Animator:
   serializedVersion: 3

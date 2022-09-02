@@ -19,14 +19,4 @@ public class PlayerInventory : MonoBehaviour
         get { return hasMorphBall; }
         set { hasMorphBall = value; }
     }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "MorphBall")
-        {
-            Destroy(other.gameObject);
-            HasMorphBall = true;
-        }
-    }
-
 }
