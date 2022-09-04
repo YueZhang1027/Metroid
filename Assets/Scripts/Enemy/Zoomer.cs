@@ -12,12 +12,6 @@ public class Zoomer : Enemy
     {
         SetAnimatorOn(direction);
     }
-
-    void Update()
-    {
-        
-    }
-
     private void FixedUpdate()
     {
         if (terminateMovement) return;

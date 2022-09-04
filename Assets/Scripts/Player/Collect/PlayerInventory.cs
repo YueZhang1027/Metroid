@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-// collectible item struct
+using System;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -11,12 +10,11 @@ public class PlayerInventory : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        collectableCounter = new HashSet<CollectableType>();
     }
 
-    private bool hasMorphBall = false;
-    public bool HasMorphBall
-    {
-        get { return hasMorphBall; }
-        set { hasMorphBall = value; }
-    }
+    HashSet<CollectableType> collectableCounter;
+
+    public bool HasCollectable(CollectableType type) { return collectableCounter.Contains(type); }
+    public void SetCollectableStatus(CollectableType type) { collectableCounter.Add(type); }
 }

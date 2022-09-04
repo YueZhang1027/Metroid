@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public int damage = 5;
+    public int damage;
     public float destroyTime = 0.35f;
 
     private void Start()

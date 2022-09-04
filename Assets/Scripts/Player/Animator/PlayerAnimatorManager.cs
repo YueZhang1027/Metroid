@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimatorManager : MonoBehaviour
 {
+
+
     public static PlayerAnimatorManager Instance { get; private set; }
 
     private void Awake()
@@ -18,10 +20,22 @@ public class PlayerAnimatorManager : MonoBehaviour
         set { curActiveAnimator = value; }
     }
 
-    public bool isRunJump = false;
+    bool isRunJump = false;
+    public bool IsRunJump 
+    {
+        set { isRunJump = value; }
+    }
 
     private void FixedUpdate()
     {
+        if (!PlayerState.Instance.isMoveable()) 
+        {
+            curActiveAnimator.speed = 0.0f;
+            return;
+        }
+
+        curActiveAnimator.speed = 1.0f;
+
         SetAnimatorLayer();
     }
 

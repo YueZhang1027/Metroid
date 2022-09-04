@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 15
+  atk: 5
   col: {fileID: 6558257505717663420}
   animator: {fileID: 5812335735667471588}
   direction: 0

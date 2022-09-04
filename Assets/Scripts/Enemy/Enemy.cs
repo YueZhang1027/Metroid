@@ -12,7 +12,8 @@ public enum MovingDirection
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected int hp = 15;
+    [SerializeField] public int hp;
+    [SerializeField] public int atk;
     [SerializeField] protected Collider col = null;
     [SerializeField] protected Animator animator = null;
 
@@ -21,12 +22,10 @@ public class Enemy : MonoBehaviour
     protected bool terminateMovement = false;
     WaitForSeconds hurtStopTime = new WaitForSeconds(0.25f);
 
-
     public void ReceiveDamage(int damage) 
     {
         hp -= damage;
         // stop for a moment, change color
-        Debug.Log(hp);
         if (hp <= 0) OnDeath();
         else StartCoroutine(StopForHurt());
     }
