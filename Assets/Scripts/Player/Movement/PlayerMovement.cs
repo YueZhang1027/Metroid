@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //TODO: align grid during jump
+
+
     Rigidbody rb;
     float moveSpeed = 6f;
     float jumpAmount = 15f;
@@ -34,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
 
         //detect collision from wall
         float horizontalMovement = Input.GetAxis("Horizontal");
+
+        Debug.Log(PlayerState.Instance.MeetWall(horizontalMovement));
+
         newVelocity.x = (!PlayerState.Instance.MeetWall(horizontalMovement)) ?
                 horizontalMovement * moveSpeed : 0.0f;
         PlayerAnimatorManager.Instance.CurActiveAnimator.SetFloat("HorizontalInput", newVelocity.x);
@@ -45,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         // cite: https://www.youtube.com/watch?v=7KiK0Aqtmzc
 
         // use vector instead of speed
-        if ((Input.GetKeyDown(KeyCode.Z) && PlayerState.Instance.canJump())) 
+        if ((Input.GetKeyDown(KeyCode.Z) && PlayerState.Instance.CanJump())) 
         {
             newVelocity += Vector3.up * jumpAmount;
             AudioSource.PlayClipAtPoint(JumpClip, transform.position);

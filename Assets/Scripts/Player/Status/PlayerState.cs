@@ -66,17 +66,18 @@ public class PlayerState : MonoBehaviour
             SetUpShapeChange(PlayerShape.Original);
         }
 
-        if (health <= 0)
-        {
-            //SetAndSendAnimatorStatus(PlayerStatus.Death);
-        }
-
         switch (shape)
         {
             case PlayerShape.Original:
                 UpdateOriginal();
                 break;
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        // hit by enemy/
+        
     }
 
     #region update player status
@@ -92,7 +93,10 @@ public class PlayerState : MonoBehaviour
 
         facingRight = Input.GetAxis("Horizontal") > 0.01 || (facingRight && Input.GetAxis("Horizontal") > -0.01f);
 
-        bool holdingUp = Input.GetKey(KeyCode.UpArrow);
+        bool holdingUp = Input.GetKey(KeyCode.UpArrow) && CanHoldUp();
+
+        //TODO: check collider height and cast for holdup availability
+
         if (lookingUp && !holdingUp)
         {
             lookingUp = false;
@@ -127,13 +131,27 @@ public class PlayerState : MonoBehaviour
     #region collectables
     public void ReceiveCollectable(CollectableType type, int amount) 
     {
+        switch (type) 
+        {
+            case CollectableType.Health:
+                HealthChange(amount);
+                break;
+        }
     }
 
-    public void HealthChange(int change)
+    public void HealthChange(int amount)
     {
-        if (change < 0)
+        if (amount < 0)
         {
+            
+            if (health <= 0)
+            {
+                //SetAndSendAnimatorStatus(PlayerStatus.Death);
+            }
         }
+
+
+        
     }
     #endregion
 
@@ -143,7 +161,15 @@ public class PlayerState : MonoBehaviour
         return status == PlayerStatus.Normal;
     }
 
-    public bool canJump()
+    bool CanHoldUp() 
+    {
+        Ray ray = new Ray(col.bounds.center, Vector3.up);
+        float fullDistance = 1.2f;
+
+        return !Physics.Raycast(ray, fullDistance, environmentMask);
+    }
+
+    public bool CanJump()
     {
         return isMoveable() && shape == PlayerShape.Original && IsGrounded();
     }

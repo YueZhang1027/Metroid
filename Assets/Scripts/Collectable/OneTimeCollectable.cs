@@ -23,10 +23,13 @@ public class OneTimeCollectable : Collectable
     IEnumerator PlayFirstTimeAudio() 
     {
         PlayerState.Instance.SetPlayerStatus(PlayerStatus.Uncontrollable);
+        AudioManager.Instance.Pause();
         AudioSource.PlayClipAtPoint(firstTimeClip, transform.position);
 
         yield return audioPlayTime;
         PlayerState.Instance.SetPlayerStatus(PlayerStatus.Normal);
+        AudioManager.Instance.UnPause();
+
         Destroy(gameObject);
     }
     
