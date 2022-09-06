@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     //TODO: align grid during jump
+    //TODO: horizontal movement detection
 
 
     Rigidbody rb;
@@ -59,12 +60,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         newVelocity += Vector3.up * Physics.gravity.y * (newVelocity.y < 0 ? fallScale : jumpScale - 1) * Time.deltaTime;
-
-        
-
-        // limit player falling velocity;
-
-        //rb.velocity = new Vector3(rb.velocity.x, Mathf.Max(-maxFallingVelocity, rb.velocity.y), 0.0f);
         #endregion
 
         rb.velocity = newVelocity;

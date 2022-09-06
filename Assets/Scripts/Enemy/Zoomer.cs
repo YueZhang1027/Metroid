@@ -14,7 +14,7 @@ public class Zoomer : Enemy
     }
     private void FixedUpdate()
     {
-        if (terminateMovement) return;
+        if (isHurt) return;
         PerformMovement();
 
         if (isTurnLocked) return;

@@ -143,15 +143,42 @@ public class PlayerState : MonoBehaviour
     {
         if (amount < 0)
         {
-            
+            health += amount;
+
             if (health <= 0)
             {
-                //SetAndSendAnimatorStatus(PlayerStatus.Death);
+                StartCoroutine(OnDeath());
+                return;
             }
+
+            StartCoroutine(StopForHurt());
+        }
+        else 
+        {
+
         }
 
-
+        UIManager.Instance.SetHealth(health);
         
+    }
+
+    float hurtWaitTime = 2f;
+
+    IEnumerator StopForHurt()
+    {
+        PlayerState.Instance.SetPlayerStatus(PlayerStatus.Uncontrollable);
+        yield return new WaitForSeconds(hurtWaitTime);
+        PlayerState.Instance.SetPlayerStatus(PlayerStatus.Normal);
+
+    }
+
+    IEnumerator OnDeath() 
+    {
+        PlayerState.Instance.SetPlayerStatus(PlayerStatus.Death);
+
+        PlayerAnimatorManager.Instance.CurActiveAnimator.SetTrigger("Death");
+        yield return new WaitForSeconds(PlayerAnimatorManager.Instance.CurActiveAnimator.playbackTime);
+
     }
     #endregion
 

@@ -19,11 +19,15 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] protected MovingDirection direction = MovingDirection.Down;
 
-    protected bool terminateMovement = false;
-    WaitForSeconds hurtStopTime = new WaitForSeconds(0.25f);
+    [SerializeField] protected SpriteRenderer spriteRenderer;
+
+    protected bool isHurt = false;
+    WaitForSeconds hurtStopTime = new WaitForSeconds(0.3f);
 
     public void ReceiveDamage(int damage) 
     {
+        if (isHurt) return;
+
         hp -= damage;
         // stop for a moment, change color
         if (hp <= 0) OnDeath();
@@ -32,12 +36,11 @@ public class Enemy : MonoBehaviour
 
     IEnumerator StopForHurt() 
     {
-
-        terminateMovement = true;
+        isHurt = true;
+        spriteRenderer.color = Color.red;
         yield return hurtStopTime;
-        terminateMovement = false;
-
-
+        spriteRenderer.color = Color.white;
+        isHurt = false;
     }
 
     protected void OnDeath() 
