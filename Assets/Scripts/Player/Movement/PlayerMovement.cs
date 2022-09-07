@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         //detect collision from wall
         float horizontalMovement = Input.GetAxis("Horizontal");
 
-        Debug.Log(PlayerState.Instance.MeetWall(horizontalMovement));
+        //Debug.Log(PlayerState.Instance.MeetWall(horizontalMovement));
 
         newVelocity.x = (!PlayerState.Instance.MeetWall(horizontalMovement)) ?
                 horizontalMovement * moveSpeed : 0.0f;

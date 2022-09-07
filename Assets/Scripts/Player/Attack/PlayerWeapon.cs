@@ -44,7 +44,7 @@ public class PlayerWeapon : MonoBehaviour
             }
         }
 
-        PlayerAnimatorManager.Instance.CurActiveAnimator.SetBool("Firing", ExistBullet());
+        if (PlayerState.Instance.GetShape() == PlayerShape.Original) PlayerAnimatorManager.Instance.CurActiveAnimator.SetBool("Firing", ExistBullet());
     }
 
     bool ExistBullet()

@@ -50,4 +50,13 @@ public class Enemy : MonoBehaviour
         // Destroy enemy
         Destroy(this.gameObject);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && PlayerState.Instance.GetStatus() == PlayerStatus.Normal) 
+        {
+            Debug.Log("Here");
+            PlayerState.Instance.HealthChange(-atk);
+        }
+    }
 }

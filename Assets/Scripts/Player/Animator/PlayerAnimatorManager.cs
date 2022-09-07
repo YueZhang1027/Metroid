@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerAnimatorManager : MonoBehaviour
 {
-
-
     public static PlayerAnimatorManager Instance { get; private set; }
 
     private void Awake()
@@ -36,7 +34,7 @@ public class PlayerAnimatorManager : MonoBehaviour
 
         curActiveAnimator.speed = 1.0f;
 
-        SetAnimatorLayer();
+        if(PlayerState.Instance.GetShape() == PlayerShape.Original) SetAnimatorLayer();
     }
 
     void SetAnimatorLayer()

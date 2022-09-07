@@ -57,6 +57,8 @@ public class PlayerState : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!isMoveable()) return;
+
         if (shape != PlayerShape.MorphBall && Input.GetKeyDown(KeyCode.DownArrow) && PlayerInventory.Instance.HasCollectable(CollectableType.MorphBall))
         {
             SetUpShapeChange(PlayerShape.MorphBall);
@@ -71,20 +73,21 @@ public class PlayerState : MonoBehaviour
             case PlayerShape.Original:
                 UpdateOriginal();
                 break;
+            case PlayerShape.MorphBall:
+                UpdateMorphed();
+                break;
         }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        // hit by enemy/
-        
     }
 
     #region update player status
     public void SetPlayerStatus(PlayerStatus newStatus) => status = newStatus;
+    public PlayerStatus GetStatus() { return status; }
+
     #endregion
 
     #region update player shapes
+    public PlayerShape GetShape() { return shape; }
+
     private void UpdateOriginal()
     {
         if (!isMoveable()) return;
@@ -113,7 +116,12 @@ public class PlayerState : MonoBehaviour
             capsuleCollider.height = 2.4f;
         }
 
-        PlayerAnimatorManager.Instance.CurActiveAnimator.SetBool("HoldingUp", lookingUp);
+        if (shape == PlayerShape.Original) PlayerAnimatorManager.Instance.CurActiveAnimator.SetBool("HoldingUp", lookingUp);
+    }
+
+    void UpdateMorphed() 
+    {
+        PlayerAnimatorManager.Instance.CurActiveAnimator.speed = Mathf.Abs(Input.GetAxis("Horizontal")) < 0.01 ? 0.0f : 1.0f;
     }
 
     void SetUpShapeChange(PlayerShape newShape = PlayerShape.Original)
@@ -143,7 +151,8 @@ public class PlayerState : MonoBehaviour
     {
         if (amount < 0)
         {
-            health += amount;
+            health = Mathf.Max(health + amount, 0);
+            UIManager.Instance.SetHealth(health);
 
             if (health <= 0)
             {
@@ -155,11 +164,10 @@ public class PlayerState : MonoBehaviour
         }
         else 
         {
-
+            //Play Sound
+            health = Mathf.Min(health + amount, 30);
+            UIManager.Instance.SetHealth(health);
         }
-
-        UIManager.Instance.SetHealth(health);
-        
     }
 
     float hurtWaitTime = 2f;
