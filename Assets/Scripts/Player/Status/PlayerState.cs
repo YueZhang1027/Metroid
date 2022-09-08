@@ -4,11 +4,14 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEngine.SceneManagement;
+
 public enum PlayerStatus
 {
     Borning,
     Normal,
     Uncontrollable,
+    Hurt,
     Death
 }
 
@@ -55,7 +58,7 @@ public class PlayerState : MonoBehaviour
     }
     #endregion
 
-    void FixedUpdate()
+    void Update()
     {
         if (!isMoveable()) return;
 
@@ -170,23 +173,28 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    float hurtWaitTime = 2f;
+    float hurtWaitTime = 0.4f;
 
     IEnumerator StopForHurt()
     {
-        PlayerState.Instance.SetPlayerStatus(PlayerStatus.Uncontrollable);
+        SetPlayerStatus(PlayerStatus.Hurt);
+        PlayerAnimatorManager.Instance.CurActiveAnimator.SetTrigger("Hurt");
         yield return new WaitForSeconds(hurtWaitTime);
-        PlayerState.Instance.SetPlayerStatus(PlayerStatus.Normal);
-
+        SetPlayerStatus(PlayerStatus.Normal);
     }
 
     IEnumerator OnDeath() 
     {
-        PlayerState.Instance.SetPlayerStatus(PlayerStatus.Death);
-
+        SetPlayerStatus(PlayerStatus.Death);
         PlayerAnimatorManager.Instance.CurActiveAnimator.SetTrigger("Death");
-        yield return new WaitForSeconds(PlayerAnimatorManager.Instance.CurActiveAnimator.playbackTime);
+        yield return AudioManager.Instance.PlayAudioWithKey("Death");
 
+        UIManager.Instance.OnDeath();
+
+        if (Input.anyKey) 
+        {
+            SceneManager.LoadScene("Main");
+        }
     }
     #endregion
 
@@ -194,6 +202,11 @@ public class PlayerState : MonoBehaviour
     public bool isMoveable()
     {
         return status == PlayerStatus.Normal;
+    }
+
+    public bool isHurtOrDeath() 
+    {
+        return status == PlayerStatus.Hurt || status == PlayerStatus.Death;
     }
 
     bool CanHoldUp() 

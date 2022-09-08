@@ -55,7 +55,6 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player") && PlayerState.Instance.GetStatus() == PlayerStatus.Normal) 
         {
-            Debug.Log("Here");
             PlayerState.Instance.HealthChange(-atk);
         }
     }

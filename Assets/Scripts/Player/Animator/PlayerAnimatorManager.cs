@@ -24,8 +24,14 @@ public class PlayerAnimatorManager : MonoBehaviour
         set { isRunJump = value; }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
+        if (PlayerState.Instance.isHurtOrDeath()) 
+        {
+            SetAnimatorToHurtLayer();
+            return;
+        }
+
         if (!PlayerState.Instance.isMoveable()) 
         {
             curActiveAnimator.speed = 0.0f;
@@ -35,6 +41,12 @@ public class PlayerAnimatorManager : MonoBehaviour
         curActiveAnimator.speed = 1.0f;
 
         if(PlayerState.Instance.GetShape() == PlayerShape.Original) SetAnimatorLayer();
+    }
+
+    void SetAnimatorToHurtLayer() 
+    {
+        int hurtLayer = CurActiveAnimator.GetLayerIndex("Hurt Layer");
+        CurActiveAnimator.SetLayerWeight(hurtLayer, 1);
     }
 
     void SetAnimatorLayer()
